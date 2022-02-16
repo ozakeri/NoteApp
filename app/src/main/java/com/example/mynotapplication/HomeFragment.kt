@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.mynotapplication.adapter.PinnedRvAdapter
 import com.example.mynotapplication.databinding.FragmentHomeBinding
 import com.example.mynotapplication.model.Notes
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         fragmentHomeBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        fragmentHomeBinding.homeFragment = this
 
         setupPinnedRv()
 
@@ -38,5 +40,9 @@ class HomeFragment : Fragment() {
         pinnedRvList.add(Notes("title 3","description 3"))
 
         fragmentHomeBinding.pinnedRv.adapter = PinnedRvAdapter(pinnedRvList)
+    }
+
+    fun fabOnClick(view : View){
+        view.findNavController().navigate(R.id.action_homeFragment_to_singleNotFragment)
     }
 }
