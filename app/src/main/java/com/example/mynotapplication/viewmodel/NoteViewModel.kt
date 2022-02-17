@@ -37,4 +37,16 @@ class NoteViewModel @Inject constructor(val notesRepository: NotesRepository) :
             }
         }
     }
+
+    fun updateNote(entitiyNote: EntitiyNote) {
+        viewModelScope.launch(Dispatchers.IO) {
+            notesRepository.updateNote(entitiyNote)
+        }
+    }
+
+    fun deleteItems(entitiyNote: EntitiyNote) {
+        viewModelScope.launch(Dispatchers.IO) {
+            notesRepository.deleteItems(entitiyNote)
+        }
+    }
 }

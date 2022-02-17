@@ -6,16 +6,19 @@ import android.view.ViewGroup
 import androidx.core.text.PrecomputedTextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotapplication.database.EntitiyNote
-import com.example.mynotapplication.databinding.PinnedRvItemsBinding
-import com.example.mynotapplication.generated.callback.OnClickListener
+import com.example.mynotapplication.databinding.UpcomingRvItemsBinding
 import com.example.mynotapplication.utils.ItemClickListener
 
-class PinnedRvAdapter(private var pinnedNoteList: ArrayList<EntitiyNote>,private val listener: ItemClickListener) :
-    RecyclerView.Adapter<PinnedRvAdapter.CustomViewHolder>() {
+class UnPinnedRvAdapter(
+    private var unPinnedNoteList: ArrayList<EntitiyNote>,
+    private val listener: ItemClickListener
+) :
+    RecyclerView.Adapter<UnPinnedRvAdapter.CustomViewHolder>() {
 
-    class CustomViewHolder(val binding: PinnedRvItemsBinding) :
+    class CustomViewHolder(val binding: UpcomingRvItemsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(entitiyNote: EntitiyNote, listener: ItemClickListener) {
+            binding.pinnedtitle
             binding.pinnedtitle.setTextFuture(
                 PrecomputedTextCompat.getTextFuture(
                     entitiyNote.notes.title, binding.pinnedtitle.textMetricsParamsCompat, null
@@ -23,18 +26,20 @@ class PinnedRvAdapter(private var pinnedNoteList: ArrayList<EntitiyNote>,private
             )
 
             binding.pinneddescription.text = entitiyNote.notes.description
-            binding.pinnedcardview.setCardBackgroundColor(Color.parseColor(entitiyNote.notes.color))
-            binding.pinnedcardview.setOnClickListener {
+            binding.upcomingCard.setCardBackgroundColor(Color.parseColor(entitiyNote.notes.color))
+
+            binding.upcomingCard.setOnClickListener {
                 listener.itemClick(entitiyNote)
             }
-            binding.imageFilterButton.setOnClickListener {
-                listener.deleteItem(binding.imageFilterButton,entitiyNote)
+
+            binding.imageFilterButton2.setOnClickListener {
+                listener.deleteItem(binding.imageFilterButton2,entitiyNote)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val binding: PinnedRvItemsBinding = PinnedRvItemsBinding.inflate(
+        val binding: UpcomingRvItemsBinding = UpcomingRvItemsBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
@@ -42,10 +47,10 @@ class PinnedRvAdapter(private var pinnedNoteList: ArrayList<EntitiyNote>,private
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.bind(pinnedNoteList[position],listener)
+        holder.bind(unPinnedNoteList[position], listener)
     }
 
     override fun getItemCount(): Int {
-        return pinnedNoteList.size
+        return unPinnedNoteList.size
     }
 }
