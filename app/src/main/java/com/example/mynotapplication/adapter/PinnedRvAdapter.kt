@@ -4,22 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.PrecomputedTextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mynotapplication.database.EntitiyNote
 import com.example.mynotapplication.databinding.PinnedRvItemsBinding
 import com.example.mynotapplication.model.Notes
 
-class PinnedRvAdapter(private var pinnedNoteList: ArrayList<Notes>) :
+class PinnedRvAdapter(private var pinnedNoteList: ArrayList<EntitiyNote>) :
     RecyclerView.Adapter<PinnedRvAdapter.CustomViewHolder>() {
 
     class CustomViewHolder(val binding: PinnedRvItemsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(notes: Notes) {
+        fun bind(entitiyNote: EntitiyNote) {
             binding.pinnedtitle.setTextFuture(
                 PrecomputedTextCompat.getTextFuture(
-                    notes.title, binding.pinnedtitle.textMetricsParamsCompat, null
+                    entitiyNote.notes.title, binding.pinnedtitle.textMetricsParamsCompat, null
                 )
             )
 
-            binding.pinneddescription.text = notes.description
+            binding.pinneddescription.text = entitiyNote.notes.description
         }
     }
 
